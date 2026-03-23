@@ -25,7 +25,6 @@ from bpmn_lib.navigator import create_navigator
 
 SCHEMA_FILENAME: str = "bpmn-schema.md"
 HIERARCHY_FILENAME: str = "bpmn-hierarchy.md"
-SCHEMA_NAME: str = "Aktor-Pipeline Schema"
 
 
 def get_version() -> str:
@@ -78,15 +77,13 @@ def main() -> None:
         hierarchy_file: str = str(references_dir / HIERARCHY_FILENAME)
         data_file: str = sys.argv[1]
         log_dir: str = "logs"
-        schema_name: str = SCHEMA_NAME
 
         # Navigator erstellen via bpmn_lib
         #log_msg("Initialize Navigator...")
         navigator = create_navigator(
             schema_file=schema_file,
             data_file=data_file,
-            hierarchy_file=hierarchy_file,
-            log_dir=log_dir
+            hierarchy_file=hierarchy_file
         )
 
         # Statistiken ausgeben
