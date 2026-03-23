@@ -3,6 +3,9 @@ name = "bpmn-modeling"
 version = "0.1.0"
 description = "BPMN modeling skill for process automation"
 requires-python = ">=3.13"
+dependencies = [
+    "bpmn-lib @ git+https://github.com/hennig-ai/bpmn-lib.git",
+]
 
 [build-system]
 requires = ["setuptools>=75.0"]
