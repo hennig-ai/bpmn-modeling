@@ -1,7 +1,7 @@
 # BPMN Modeling
 
 An agent skill that creates and modifies BPMN process models
-in Markdown table format based on the BPMN Database Schema v4.0.
+in Markdown table format based on the BPMN Database Schema.
 
 This skill follows the open [Agent Skills](https://agentskills.io) standard
 and works across multiple AI platforms.

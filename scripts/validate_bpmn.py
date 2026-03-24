@@ -35,7 +35,7 @@ def get_version() -> str:
     version from the [project] section.
 
     Returns:
-        The version number as string (e.g. "0.1.0")
+        The version number as string (e.g. "1.0.0")
 
     Raises:
         FileNotFoundError: If pyproject.toml is not found
@@ -63,13 +63,13 @@ def get_version() -> str:
 def main() -> None:
     """Main function - initializes navigator and outputs statistics."""
     #proc_frame_start("validate_bpmn", get_version(), "config.ini")
-    proc_frame_start("validate_bpmn", get_version())
+    proc_frame_start("validate_bpmn", get_version(), error_only=True)
 
     if len(sys.argv) < 2:
         log_and_raise(ValueError("Usage: python validate_bpmn.py <data_file>"))
 
     try:
-        log_msg("=== BPMN Model Validation ===")
+        print(f"Validating BPMN model...")
 
         # Resolve paths relative to script directory
         project_dir: Path = Path(__file__).parent.parent
@@ -84,7 +84,8 @@ def main() -> None:
         navigator = create_navigator(
             schema_file=schema_file,
             data_file=data_file,
-            hierarchy_file=hierarchy_file
+            hierarchy_file=hierarchy_file,
+            report_target=sys.stdout
         )
 
         # Output statistics
@@ -93,11 +94,11 @@ def main() -> None:
 
         #log_msg(f"Navigator initialized: {element_count} elements, {process_count} Processes")
 
-        log_msg("=== Validation successfull ===")
+        print(f"Validation successfull.")
         proc_frame_end()
 
     except Exception as e:
-        log_msg(f"Validation failed: {e}")
+        print(f"Validation failed: {e}")
         sys.exit(1)
 
 
