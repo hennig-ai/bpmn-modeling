@@ -1,11 +1,12 @@
-"""Validiert die BPMN-Datenbank durch Initialisierung des Navigators.
+"""Validates a BPMN model by initializing the navigator.
 
-Laedt die BPMN-Konfiguration aus config.ini und initialisiert den Navigator.
-Gibt grundlegende Statistiken zur geladenen Prozessbeschreibung aus.
+Loads the BPMN schema and hierarchy, then initializes the navigator
+with the given data file. Outputs basic statistics about the loaded
+process description.
 
 Exit Codes:
-    0: Validierung erfolgreich
-    1: Validierung fehlgeschlagen
+    0: Validation successful
+    1: Validation failed
 
 Usage:
     python validate_bpmn.py <data_file>
@@ -28,39 +29,39 @@ HIERARCHY_FILENAME: str = "bpmn-hierarchy.md"
 
 
 def get_version() -> str:
-    """Liest die Projektversion aus pyproject.toml.
+    """Reads the project version from pyproject.toml.
 
-    Sucht die pyproject.toml im Projektverzeichnis (relativ zu diesem Modul)
-    und extrahiert die Version aus der [project] Sektion.
+    Locates pyproject.toml relative to this module and extracts the
+    version from the [project] section.
 
     Returns:
-        Die Versionsnummer als String (z.B. "0.1.0")
+        The version number as string (e.g. "0.1.0")
 
     Raises:
-        FileNotFoundError: Wenn pyproject.toml nicht gefunden wird
-        KeyError: Wenn [project].version nicht definiert ist
+        FileNotFoundError: If pyproject.toml is not found
+        KeyError: If [project].version is not defined
     """
     project_root = Path(__file__).parent
     pyproject_path = project_root / "pyproject.toml"
 
     if not pyproject_path.exists():
-        log_and_raise(FileNotFoundError(f"pyproject.toml nicht gefunden: {pyproject_path}"))
+        log_and_raise(FileNotFoundError(f"pyproject.toml not found: {pyproject_path}"))
 
     with open(pyproject_path, "rb") as f:
         data = tomllib.load(f)
 
     if "project" not in data:
-        log_and_raise(KeyError("[project] Sektion fehlt in pyproject.toml"))
+        log_and_raise(KeyError("[project] section missing in pyproject.toml"))
 
     if "version" not in data["project"]:
-        log_and_raise(KeyError("[project].version fehlt in pyproject.toml"))
+        log_and_raise(KeyError("[project].version missing in pyproject.toml"))
 
     version: str = data["project"]["version"]
     return version
 
 
 def main() -> None:
-    """Hauptfunktion - Initialisiert Navigator und gibt Statistiken aus."""
+    """Main function - initializes navigator and outputs statistics."""
     #proc_frame_start("validate_bpmn", get_version(), "config.ini")
     proc_frame_start("validate_bpmn", get_version())
 
@@ -70,7 +71,7 @@ def main() -> None:
     try:
         log_msg("=== BPMN Model Validation ===")
 
-        # Pfade relativ zum Skript-Verzeichnis auflösen
+        # Resolve paths relative to script directory
         script_dir: Path = Path(__file__).parent
         references_dir: Path = script_dir / "references"
         schema_file: str = str(references_dir / SCHEMA_FILENAME)
@@ -78,7 +79,7 @@ def main() -> None:
         data_file: str = sys.argv[1]
         log_dir: str = "logs"
 
-        # Navigator erstellen via bpmn_lib
+        # Create navigator via bpmn_lib
         #log_msg("Initialize Navigator...")
         navigator = create_navigator(
             schema_file=schema_file,
@@ -86,7 +87,7 @@ def main() -> None:
             hierarchy_file=hierarchy_file
         )
 
-        # Statistiken ausgeben
+        # Output statistics
         element_count = len(navigator.m_element_mapping)
         process_count = len(navigator.m_process_elements)
 
@@ -96,11 +97,7 @@ def main() -> None:
         proc_frame_end()
 
     except Exception as e:
-        print()
-        print("=== Validation FEHLGESCHLAGEN ===")
-        print()
-        print(f"Fehler: {e}")
-        log_msg(f"Validation fehlgeschlagen: {e}")
+        log_msg(f"Validation failed: {e}")
         sys.exit(1)
 
 
