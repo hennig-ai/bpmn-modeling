@@ -1,4 +1,4 @@
-# BPMN Modeling Light
+# BPMN Modeling
 
 An agent skill that creates and modifies BPMN process models
 in Markdown table format based on the BPMN Database Schema v4.0.
@@ -27,10 +27,10 @@ From your project root, clone the skill into the skills directory:
 
 ```bash
 # Project-level (shared via git)
-git clone https://github.com/hennig-ai/bpmn-modeling-light.git .claude/skills/bpmn-modeling-light
+git clone https://github.com/hennig-ai/bpmn-modeling.git .claude/skills/bpmn-modeling
 
 # Personal (available across all projects)
-git clone https://github.com/hennig-ai/bpmn-modeling-light.git ~/.claude/skills/bpmn-modeling-light
+git clone https://github.com/hennig-ai/bpmn-modeling.git ~/.claude/skills/bpmn-modeling
 ```
 
 ### Claude.ai (Cowork)
@@ -40,13 +40,13 @@ Upload the skill via the Claude.ai interface. See [Using skills in Claude](https
 ### OpenAI Codex CLI
 
 ```bash
-git clone https://github.com/hennig-ai/bpmn-modeling-light.git .agents/skills/bpmn-modeling-light
+git clone https://github.com/hennig-ai/bpmn-modeling.git .agents/skills/bpmn-modeling
 ```
 
 ### GitHub Copilot
 
 ```bash
-git clone https://github.com/hennig-ai/bpmn-modeling-light.git .github/skills/bpmn-modeling-light
+git clone https://github.com/hennig-ai/bpmn-modeling.git .github/skills/bpmn-modeling
 ```
 
 ### Claude.ai Projects (alternative)
@@ -87,7 +87,7 @@ This installs `bpmn-lib` (and transitively `basic-framework`) as declared in `py
 | File | Purpose |
 |------|---------|
 | `SKILL.md` | Skill definition and rules |
-| `validate_bpmn.py` | Automated model validation script |
+| `scripts/validate_bpmn.py` | Automated model validation script |
 | `pyproject.toml` | Python project metadata and dependencies |
 | `references/bpmn-schema.md` | Full schema documentation |
 | `references/bpmn-hierarchy.md` | BPMN element type hierarchy |

@@ -1,5 +1,5 @@
 ---
-name: bpmn-modeling-light
+name: bpmn-modeling
 description: >
   This skill generates and modifies BPMN process models in Markdown table format
   according to `references/bpmn-schema.md`. It is used exclusively when the user
@@ -11,7 +11,7 @@ metadata:
   version: "2.0"
 ---
 
-# BPMN Modeling Light — Skill
+# BPMN Modeling — Skill
 
 ## Trigger Examples
 
@@ -260,7 +260,7 @@ The following checks MUST be performed before every output:
 
 ## Automated Validation
 
-The skill includes a validation script (`validate_bpmn.py`) that programmatically validates BPMN models against the schema and hierarchy.
+The skill includes a validation script (`scripts/validate_bpmn.py`) that programmatically validates BPMN models against the schema and hierarchy.
 
 ### Trigger
 
@@ -271,7 +271,7 @@ The skill includes a validation script (`validate_bpmn.py`) that programmaticall
 
 Save the model to a Markdown file, then run:
 ```bash
-python <skill-path>/validate_bpmn.py <model_file>
+python <skill-path>/scripts/validate_bpmn.py <model_file>
 ```
 
 The script writes all output to stdout (results and errors).

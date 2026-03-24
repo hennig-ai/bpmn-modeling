@@ -41,7 +41,7 @@ def get_version() -> str:
         FileNotFoundError: If pyproject.toml is not found
         KeyError: If [project].version is not defined
     """
-    project_root = Path(__file__).parent
+    project_root = Path(__file__).parent.parent
     pyproject_path = project_root / "pyproject.toml"
 
     if not pyproject_path.exists():
@@ -72,8 +72,8 @@ def main() -> None:
         log_msg("=== BPMN Model Validation ===")
 
         # Resolve paths relative to script directory
-        script_dir: Path = Path(__file__).parent
-        references_dir: Path = script_dir / "references"
+        project_dir: Path = Path(__file__).parent.parent
+        references_dir: Path = project_dir / "references"
         schema_file: str = str(references_dir / SCHEMA_FILENAME)
         hierarchy_file: str = str(references_dir / HIERARCHY_FILENAME)
         data_file: str = sys.argv[1]
