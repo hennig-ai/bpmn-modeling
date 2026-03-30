@@ -215,6 +215,7 @@ There are no separate tables for `exclusive_gateway`, `parallel_gateway`, etc. T
 - Use only values from defined value domains (see `references/bpmn-schema.md`)
 - Ensure inheritance relationships are consistent
 - Every executable process (`is_executable=true`) must have at least one start event and one end event
+- All flow objects must be connected via sequence flows — no isolated elements ("islands"). Exception: Start events (outgoing only) and end events (incoming only)
 
 ---
 
@@ -245,29 +246,16 @@ There are no separate tables for `exclusive_gateway`, `parallel_gateway`, etc. T
 
 ---
 
-## Quality Assurance
-
-The following checks MUST be performed before every output:
-
-1. **Element type correctness**: Verify `element_type` for EVERY entry in `bpmn_element`
-2. **FK validation**: Validate all foreign key relationships across tables
-3. **BPMN conformity**: Verify all validation rules from `references/bpmn-schema.md`
-4. **Process completeness**: For `is_executable=true` — at least one start event and one end event present?
-5. **Connectivity**: Are all flow objects reachable via sequence flows?
-6. **No empty tables**: Remove all tables without data rows from the output
-7. **Table order**: Does the order match the canonical order (Rule 2)?
-8. **PK uniqueness**: Are all PKs unique within their table?
-
----
-
 ## Automated Validation
 
 The skill includes a validation script (`scripts/validate_bpmn.py`) that programmatically validates BPMN models against the schema and hierarchy.
 
-### Trigger
+### Trigger — MANDATORY
 
-- **Explicit**: The user requests validation (e.g. "Validate the model", "Check the BPMN file")
-- **Automatic**: After the skill has completed ALL modeling changes for a given request. Do NOT run validation after each atomic change — only once the entire modeling task is finished and the model file has been written.
+The script MUST be executed in both cases — never skip it, never replace it with manual checks:
+
+- **Explicit**: The user requests validation (e.g. "Validate the model", "Check the BPMN file") → run the script immediately. A manual review of the Rules is NO substitute for the script.
+- **After modeling**: Once ALL modeling changes for a request are done and the model file has been written → run the script once at the end (NOT after each atomic change)
 
 ### Invocation
 
