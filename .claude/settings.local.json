@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python scripts/validate_all_tests.py)"
+    ]
+  }
+}
