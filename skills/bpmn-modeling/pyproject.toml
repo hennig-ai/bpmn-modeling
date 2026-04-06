@@ -1,6 +1,6 @@
 [project]
 name = "bpmn-modeling"
-version = "1.1.0"
+version = "1.1.1"
 description = "BPMN modeling skill for process automation"
 requires-python = ">=3.13"
 dependencies = [
