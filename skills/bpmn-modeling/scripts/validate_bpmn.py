@@ -9,7 +9,37 @@ Exit Codes:
     1: Validation failed
 
 Usage:
-    python validate_bpmn.py <data_file>
+    python validate_bpmn.py <data_file> [validation_level]
+
+Layout assumption:
+    This script expects a sibling ``references/`` directory containing
+    ``bpmn-schema.md``, ``bpmn-hierarchy.md`` and ``rules/``::
+
+        <root>/
+            scripts/validate_bpmn.py
+            references/
+                bpmn-schema.md
+                bpmn-hierarchy.md
+                rules/*.md
+
+    ``<root>`` is derived from ``__file__``; no absolute path or CLI
+    argument for the metadata directory is required.
+
+Validation Levels:
+    The optional third argument selects which rule set is applied. If
+    omitted, "best_practice" is used.
+
+    spec_v2:
+        Applies all rules required by the BPMN 2.0 specification
+        (includes the basic rule set).
+    best_practice (default):
+        Applies spec_v2 rules plus additional best-practice rules
+        recommended for clean, maintainable BPMN models.
+    personal:
+        Applies the best_practice rule set, additionally includes any
+        rule explicitly marked as ``personal: include`` and skips any
+        rule marked as ``personal: skip``. Useful for project- or
+        author-specific rule customizations.
 """
 
 import sys
@@ -18,11 +48,11 @@ from pathlib import Path
 
 from basic_framework import (
     proc_frame_start,
-    proc_frame_end,
-    log_msg,
+    proc_frame_end
 )
 from basic_framework.proc_frame import log_and_raise
 from bpmn_lib.navigator import create_navigator
+from bpmn_lib.validation import BPMNValidationError
 
 SCHEMA_FILENAME: str = "bpmn-schema.md"
 HIERARCHY_FILENAME: str = "bpmn-hierarchy.md"
@@ -65,41 +95,42 @@ def main() -> None:
     #proc_frame_start("validate_bpmn", get_version(), "config.ini")
     proc_frame_start("validate_bpmn", get_version(), error_only=True)
 
-    if len(sys.argv) < 2:
-        log_and_raise(ValueError("Usage: python validate_bpmn.py <data_file>"))
-
     try:
+        if len(sys.argv) < 2:
+            log_and_raise(ValueError("Usage: python validate_bpmn.py <data_file> [validation_level]"))
+
         print(f"Validating BPMN model...")
 
-        # Resolve paths relative to script directory
-        project_dir: Path = Path(__file__).parent.parent
-        references_dir: Path = project_dir / "references"
-        schema_file: str = str(references_dir / SCHEMA_FILENAME)
-        hierarchy_file: str = str(references_dir / HIERARCHY_FILENAME)
         data_file: str = sys.argv[1]
-        log_dir: str = "logs"
+        validation_level: str = sys.argv[2] if len(sys.argv) >= 3 else "best_practice"
+        metadata_dir: Path = (Path(__file__).parent.parent / "references").resolve()
+        schema_file: str = str(metadata_dir / SCHEMA_FILENAME)
+        hierarchy_file: str = str(metadata_dir / HIERARCHY_FILENAME)
 
         # Create navigator via bpmn_lib
-        #log_msg("Initialize Navigator...")
         navigator = create_navigator(
             schema_file=schema_file,
             data_file=data_file,
             hierarchy_file=hierarchy_file,
-            report_target=sys.stdout
+            report_target=sys.stdout,
+            rules_dir=str(metadata_dir / "rules"),
+            validation_level=validation_level
         )
 
         # Output statistics
         element_count = len(navigator.m_element_mapping)
         process_count = len(navigator.m_process_elements)
 
-        #log_msg(f"Navigator initialized: {element_count} elements, {process_count} Processes")
-
-        print(f"Validation successfull.")
+        print(f"Validation successful.")
         proc_frame_end()
 
-    except Exception as e:
+    except BPMNValidationError as e:
         print(f"Validation failed: {e}")
         sys.exit(1)
+
+    except Exception as e:
+        print(f"System error: {e}")
+        sys.exit(2)
 
 
 if __name__ == "__main__":
