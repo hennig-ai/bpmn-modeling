@@ -2,7 +2,7 @@
 name = "bpmn-modeling"
 version = "1.1.0"
 description = "BPMN modeling skill for process automation"
-requires-python = ">=3.13"
+requires-python = ">=3.10"
 dependencies = [
     "bpmn-lib @ git+https://github.com/hennig-ai/bpmn-lib.git",
 ]

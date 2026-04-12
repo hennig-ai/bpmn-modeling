@@ -13,7 +13,7 @@ Usage:
 """
 
 import sys
-import tomllib
+import re
 from pathlib import Path
 
 from basic_framework import (
@@ -32,14 +32,14 @@ def get_version() -> str:
     """Reads the project version from pyproject.toml.
 
     Locates pyproject.toml relative to this module and extracts the
-    version from the [project] section.
+    version from the [project] section using a regex pattern.
 
     Returns:
         The version number as string (e.g. "1.0.0")
 
     Raises:
         FileNotFoundError: If pyproject.toml is not found
-        KeyError: If [project].version is not defined
+        ValueError: If version cannot be extracted
     """
     project_root = Path(__file__).parent.parent
     pyproject_path = project_root / "pyproject.toml"
@@ -47,17 +47,13 @@ def get_version() -> str:
     if not pyproject_path.exists():
         log_and_raise(FileNotFoundError(f"pyproject.toml not found: {pyproject_path}"))
 
-    with open(pyproject_path, "rb") as f:
-        data = tomllib.load(f)
+    content: str = pyproject_path.read_text(encoding="utf-8")
+    match: re.Match[str] | None = re.search(r'^version\s*=\s*"([^"]+)"', content, re.MULTILINE)
 
-    if "project" not in data:
-        log_and_raise(KeyError("[project] section missing in pyproject.toml"))
+    if match is None:
+        log_and_raise(ValueError(f"version not found in {pyproject_path}"))
 
-    if "version" not in data["project"]:
-        log_and_raise(KeyError("[project].version missing in pyproject.toml"))
-
-    version: str = data["project"]["version"]
-    return version
+    return match.group(1)
 
 
 def main() -> None:
