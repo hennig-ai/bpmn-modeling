@@ -24,3 +24,7 @@ Desktop.ini
 nulltxt.txt
 todo_for_skill.md
 docs/internal/
+
+# Claude Code
+.claude/settings.json
+*.bak
