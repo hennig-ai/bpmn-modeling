@@ -1,7 +1,14 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python scripts/validate_all_tests.py)"
+      "Bash(python scripts/validate_all_tests.py)",
+      "Bash(gh api:*)",
+      "Bash(pip download:*)",
+      "WebSearch",
+      "Bash(zip -r ../bpmn-modeling-skill.zip bpmn-modeling/ -x \"bpmn-modeling/wheels/bpmn-lib-4.0.2.zip\" \"bpmn-modeling/wheels/bpmn_lib-4.0.2-py3-none-any.whl\" \"bpmn-modeling/nulltxt.txt\" \"*__pycache__*\")"
+    ],
+    "additionalDirectories": [
+      "c:\\MyData\\enviroments\\skills\\bpmn-modeling"
     ]
   }
 }

@@ -259,6 +259,11 @@ The script MUST be executed in both cases — never skip it, never replace it wi
 
 ### Invocation
 
+Before first use, install the bundled dependencies (only needed once per session):
+```bash
+pip install --no-index --find-links=<skill-path>/wheels/ <skill-path>/wheels/*.whl
+```
+
 Save the model to a Markdown file, then run:
 ```bash
 python <skill-path>/scripts/validate_bpmn.py <model_file>

@@ -74,25 +74,18 @@ Trigger the skill with BPMN-specific requests, e.g.:
 
 ## Dependencies
 
-The validation script requires Python packages. Install them with:
+The validation script requires Python packages. All dependencies are bundled as pre-built wheels in the `skills/bpmn-modeling/wheels/` directory — no internet access required.
+
+Install with:
 
 ```bash
-pip install -e <skill-path>
+pip install --no-index --find-links=<skill-path>/wheels/ -e <skill-path>
 ```
 
-This installs `bpmn-lib` (and transitively `basic-framework`) as declared in `pyproject.toml`.
-
-## Repository Structure
-
-| File | Purpose |
-|------|---------|
-| `SKILL.md` | Skill definition and rules |
-| `scripts/validate_bpmn.py` | Automated model validation script |
-| `pyproject.toml` | Python project metadata and dependencies |
-| `references/bpmn-schema.md` | Full schema documentation |
-| `references/bpmn-hierarchy.md` | BPMN element type hierarchy |
-| `references/bpmn-instance-example.md` | Reference instance with table format |
-| `references/event-detail-tables.md` | Event definition tables |
+The bundled wheels are:
+- `bpmn-lib` — BPMN process navigation library
+- `basic-framework` — base framework (transitive dependency)
+- `chardet` — character encoding detection (transitive dependency)
 
 ## License
 
