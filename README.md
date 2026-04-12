@@ -82,7 +82,7 @@ After cloning the skill, install the dependencies:
 pip install -e <skill-path>
 ```
 
-This installs `bpmn-lib` and its transitive dependencies (`basic-framework`, `chardet`) from PyPI as declared in `pyproject.toml`.
+This installs `bpmn-lib` and its transitive dependencies (`basic-framework`) from PyPI as declared in `pyproject.toml`.
 
 Clone a specific tagged version and install dependencies in editable mode (no wheel required):
 
@@ -100,7 +100,7 @@ git clone --depth 1 --branch pre-wheel-merge-1.0.1 https://github.com/hennig-ai/
 pip install "$HOME/.claude/skills/bpmn-modeling"
 ```
 
-`--depth 1` fetches only the tagged commit. `pip install` pulls all dependencies (`bpmn-lib`, `basic-framework`, `chardet`) from PyPI.
+`--depth 1` fetches only the tagged commit. `pip install` pulls all dependencies (`bpmn-lib`, `basic-framework`) from PyPI.
 
 > **Windows note:** `~` is only expanded in Git Bash/MSYS2, not in PowerShell or CMD. Use `$HOME` (PowerShell) or `%USERPROFILE%` (CMD) instead.
 
