@@ -74,25 +74,29 @@ Trigger the skill with BPMN-specific requests, e.g.:
 
 ## Dependencies
 
-The validation script requires Python packages. Install them with:
+The validation script requires Python packages that are automatically installed from PyPI.
+
+After cloning the skill, install the dependencies:
 
 ```bash
 pip install -e <skill-path>
 ```
 
-This installs `bpmn-lib` (and transitively `basic-framework`) as declared in `pyproject.toml`.
+This installs `bpmn-lib` and its transitive dependencies (`basic-framework`, `chardet`) from PyPI as declared in `pyproject.toml`.
 
-## Repository Structure
+### Example: Claude Code (project-level)
 
-| File | Purpose |
-|------|---------|
-| `SKILL.md` | Skill definition and rules |
-| `scripts/validate_bpmn.py` | Automated model validation script |
-| `pyproject.toml` | Python project metadata and dependencies |
-| `references/bpmn-schema.md` | Full schema documentation |
-| `references/bpmn-hierarchy.md` | BPMN element type hierarchy |
-| `references/bpmn-instance-example.md` | Reference instance with table format |
-| `references/event-detail-tables.md` | Event definition tables |
+```bash
+git clone https://github.com/hennig-ai/bpmn-modeling.git .claude/skills/bpmn-modeling
+pip install -e .claude/skills/bpmn-modeling
+```
+
+### Example: Claude Code (personal)
+
+```bash
+git clone https://github.com/hennig-ai/bpmn-modeling.git ~/.claude/skills/bpmn-modeling
+pip install -e ~/.claude/skills/bpmn-modeling
+```
 
 ## License
 
