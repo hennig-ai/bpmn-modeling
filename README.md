@@ -91,12 +91,18 @@ Clone a specific tagged version and install dependencies in editable mode (no wh
 git clone --depth 1 --branch pre-wheel-merge-1.0.1 https://github.com/hennig-ai/bpmn-modeling.git .claude/skills/bpmn-modeling
 pip install .claude/skills/bpmn-modeling
 
-# Personal
+# Personal (Linux/macOS/Git Bash)
 git clone --depth 1 --branch pre-wheel-merge-1.0.1 https://github.com/hennig-ai/bpmn-modeling.git ~/.claude/skills/bpmn-modeling
 pip install ~/.claude/skills/bpmn-modeling
+
+# Personal (Windows — PowerShell/CMD: ~ is not expanded)
+git clone --depth 1 --branch pre-wheel-merge-1.0.1 https://github.com/hennig-ai/bpmn-modeling.git "$HOME/.claude/skills/bpmn-modeling"
+pip install "$HOME/.claude/skills/bpmn-modeling"
 ```
 
 `--depth 1` fetches only the tagged commit. `pip install` pulls all dependencies (`bpmn-lib`, `basic-framework`, `chardet`) from PyPI.
+
+> **Windows note:** `~` is only expanded in Git Bash/MSYS2, not in PowerShell or CMD. Use `$HOME` (PowerShell) or `%USERPROFILE%` (CMD) instead.
 
 ## License
 

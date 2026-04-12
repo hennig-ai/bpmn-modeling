@@ -1,12 +1,10 @@
 ---
 name: bpmn-modeling
 description: >
-  This skill generates, modifies, and validates BPMN process models in Markdown table format
-  according to `references/bpmn-schema.md`. It is used exclusively when the user
-  explicitly wants to create, extend, modify, or validate a BPMN model. Trigger terms include
-  BPMN, Start Event, Sequence Flow, Gateway, User Task, validate, check, and other BPMN-specific terms.
-  Do not trigger for general process descriptions without BPMN context, for other
-  model types (e.g. data model), or for general BPMN questions without a modeling request.
+  Create, modify, and validate BPMN process models. TRIGGER when: user mentions BPMN,
+  process modeling with BPMN, Start Event, Gateway, Sequence Flow, User Task, or asks
+  to validate/check a BPMN model. Do NOT trigger for general process descriptions
+  without BPMN context or other model types.
 metadata:
   version: "2.0"
 ---
