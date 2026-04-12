@@ -84,19 +84,19 @@ pip install -e <skill-path>
 
 This installs `bpmn-lib` and its transitive dependencies (`basic-framework`, `chardet`) from PyPI as declared in `pyproject.toml`.
 
-### Example: Claude Code (project-level)
+Clone a specific tagged version and install dependencies in editable mode (no wheel required):
 
 ```bash
-git clone https://github.com/hennig-ai/bpmn-modeling.git .claude/skills/bpmn-modeling
-pip install -e .claude/skills/bpmn-modeling
+# Project-level
+git clone --depth 1 --branch pre-wheel-merge-1.0.1 https://github.com/hennig-ai/bpmn-modeling.git .claude/skills/bpmn-modeling
+pip install .claude/skills/bpmn-modeling
+
+# Personal
+git clone --depth 1 --branch pre-wheel-merge-1.0.1 https://github.com/hennig-ai/bpmn-modeling.git ~/.claude/skills/bpmn-modeling
+pip install ~/.claude/skills/bpmn-modeling
 ```
 
-### Example: Claude Code (personal)
-
-```bash
-git clone https://github.com/hennig-ai/bpmn-modeling.git ~/.claude/skills/bpmn-modeling
-pip install -e ~/.claude/skills/bpmn-modeling
-```
+`--depth 1` fetches only the tagged commit. `pip install` pulls all dependencies (`bpmn-lib`, `basic-framework`, `chardet`) from PyPI.
 
 ## License
 
