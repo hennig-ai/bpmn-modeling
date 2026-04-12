@@ -1,12 +1,12 @@
 [project]
 name = "bpmn-modeling"
-version = "1.1.0"
+version = "1.1.1"
 description = "BPMN modeling skill for process automation"
 requires-python = ">=3.10"
 dependencies = [
-    "bpmn-lib>=4.0.5",
+    "bpmn-lib",
 ]
 
 [build-system]
 requires = ["setuptools>=75.0"]
-build-backend = "setuptools.build_meta"
+build-backend = "setuptools.backends._legacy:_Backend"
