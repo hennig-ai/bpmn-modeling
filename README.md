@@ -3,13 +3,10 @@
 An agent skill that creates and modifies BPMN process models
 in Markdown table format based on the BPMN Database Schema.
 
-This skill follows the open [Agent Skills](https://agentskills.io) standard
-and works across multiple AI platforms.
+This skill follows the open [Agent Skills](https://agentskills.io) standard.
+Your AI agent must support skills to use it.
 
 ## What it does
-
-This skill enables AI agents to generate complete, schema-compliant
-BPMN models as structured Markdown tables. It supports:
 
 - **New model creation** from natural language process descriptions
 - **Model modification** of existing BPMN Markdown models
@@ -17,92 +14,39 @@ BPMN models as structured Markdown tables. It supports:
 - Full referential integrity (PK/FK validation)
 - BPMN 2.0 conformance checks
 
+## Prerequisites
+
+- **Python** >= 3.10
+- **pip** (up to date — run `python -m pip install --upgrade pip` if installs fail)
+- **Git**
+
 ## Installation
 
-Skills are installed by cloning the repository into the directory where your AI agent looks for skills. There is no separate install command — placing the files in the right location is all it takes. The agent automatically discovers any `SKILL.md` file in its skills directory.
-
-### Claude Code
-
-From your project root, clone the skill into the skills directory:
+Pre-installing dependencies avoids the agent downloading and building wheels at the start of every session. Clone the tagged version and install dependencies once:
 
 ```bash
-# Project-level (shared via git)
-git clone https://github.com/hennig-ai/bpmn-modeling.git .claude/skills/bpmn-modeling
-
-# Personal (available across all projects)
-git clone https://github.com/hennig-ai/bpmn-modeling.git ~/.claude/skills/bpmn-modeling
+git clone --depth 1 --branch pre-wheel-merge-1.0.2 https://github.com/hennig-ai/bpmn-modeling.git <skill-path>
+pip install <skill-path>
 ```
 
-### Claude.ai (Cowork)
+`--depth 1` fetches only the tagged commit. `pip install` pulls all dependencies (`bpmn-lib`, `basic-framework`) from PyPI.
 
-Upload the skill via the Claude.ai interface. See [Using skills in Claude](https://support.claude.com/en/articles/12512180-use-skills-in-claude) for details.
+Replace `<skill-path>` with the skills directory for your platform:
 
-### OpenAI Codex CLI
+| Platform | Project-level | Personal |
+|----------|--------------|----------|
+| Claude Code | `.claude/skills/bpmn-modeling` | `~/.claude/skills/bpmn-modeling` |
+| OpenAI Codex CLI | `.agents/skills/bpmn-modeling` | — |
+| GitHub Copilot | `.github/skills/bpmn-modeling` | — |
 
-```bash
-git clone https://github.com/hennig-ai/bpmn-modeling.git .agents/skills/bpmn-modeling
-```
-
-### GitHub Copilot
-
-```bash
-git clone https://github.com/hennig-ai/bpmn-modeling.git .github/skills/bpmn-modeling
-```
-
-### Claude.ai Projects (alternative)
-
-You can also use this skill manually via Claude.ai Projects. However, this requires adjustments:
-
-1. Paste the content of `SKILL.md` into the **Project Prompt** (system instructions)
-2. Upload the four files from `references/` as **Project Knowledge**
-3. **Remove or adapt the "Loading Strategy" section** from the prompt — it references file paths that don't apply in a Projects context, since all knowledge files are already loaded into the conversation
-
-Note that in Projects, all reference files are always in context (no lazy loading), which uses more of the context window.
-
-### Other platforms
-
-Any AI agent that supports the [Agent Skills standard](https://agentskills.io) can use this skill. Clone the repository into the platform's skills directory.
-
-> **Note:** This skill has only been tested on Claude Code and Claude.ai (Cowork). It should work on any platform that supports the Agent Skills standard, but is not guaranteed.
+> **Windows note:** `~` is only expanded in Git Bash/MSYS2, not in PowerShell or CMD. Use `$HOME` or `%USERPROFILE%` instead.
 
 ## Usage
 
 Trigger the skill with BPMN-specific requests, e.g.:
 - "Create a BPMN model for an order process"
 - "Add an Exclusive Gateway to the model"
-- "Modify the existing BPMN model"
-
-## Dependencies
-
-The validation script requires Python packages that are automatically installed from PyPI.
-
-After cloning the skill, install the dependencies:
-
-```bash
-pip install -e <skill-path>
-```
-
-This installs `bpmn-lib` and its transitive dependencies (`basic-framework`) from PyPI as declared in `pyproject.toml`.
-
-Clone a specific tagged version and install dependencies in editable mode (no wheel required):
-
-```bash
-# Project-level
-git clone --depth 1 --branch pre-wheel-merge-1.0.1 https://github.com/hennig-ai/bpmn-modeling.git .claude/skills/bpmn-modeling
-pip install .claude/skills/bpmn-modeling
-
-# Personal (Linux/macOS/Git Bash)
-git clone --depth 1 --branch pre-wheel-merge-1.0.1 https://github.com/hennig-ai/bpmn-modeling.git ~/.claude/skills/bpmn-modeling
-pip install ~/.claude/skills/bpmn-modeling
-
-# Personal (Windows — PowerShell/CMD: ~ is not expanded)
-git clone --depth 1 --branch pre-wheel-merge-1.0.1 https://github.com/hennig-ai/bpmn-modeling.git "$HOME/.claude/skills/bpmn-modeling"
-pip install "$HOME/.claude/skills/bpmn-modeling"
-```
-
-`--depth 1` fetches only the tagged commit. `pip install` pulls all dependencies (`bpmn-lib`, `basic-framework`) from PyPI.
-
-> **Windows note:** `~` is only expanded in Git Bash/MSYS2, not in PowerShell or CMD. Use `$HOME` (PowerShell) or `%USERPROFILE%` (CMD) instead.
+- "Validate the BPMN model"
 
 ## License
 
