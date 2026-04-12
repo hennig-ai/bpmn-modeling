@@ -35,7 +35,7 @@ git clone https://github.com/hennig-ai/bpmn-modeling.git ~/.claude/skills/bpmn-m
 
 ### Claude.ai (Cowork)
 
-Upload the skill via the Claude.ai interface. See [Using skills in Claude](https://support.claude.com/en/articles/12512180-use-skills-in-claude) for details.
+Download `bpmn-modeling-skill.zip` from the [latest GitHub Release](https://github.com/hennig-ai/bpmn-modeling/releases/latest) and upload it via the Claude.ai interface. The zip includes bundled wheels for offline dependency installation. See [Using skills in Claude](https://support.claude.com/en/articles/12512180-use-skills-in-claude) for details.
 
 ### OpenAI Codex CLI
 
@@ -74,18 +74,13 @@ Trigger the skill with BPMN-specific requests, e.g.:
 
 ## Dependencies
 
-The validation script requires Python packages. All dependencies are bundled as pre-built wheels in the `skills/bpmn-modeling/wheels/` directory — no internet access required.
-
-Install with:
+The validation script requires Python packages. Install with:
 
 ```bash
-pip install --no-index --find-links=<skill-path>/wheels/ -e <skill-path>
+pip install <skill-path>
 ```
 
-The bundled wheels are:
-- `bpmn-lib` — BPMN process navigation library
-- `basic-framework` — base framework (transitive dependency)
-- `chardet` — character encoding detection (transitive dependency)
+This pulls all dependencies (`bpmn-lib`, `basic-framework`) from PyPI.
 
 ## License
 

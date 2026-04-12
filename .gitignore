@@ -25,6 +25,10 @@ nulltxt.txt
 todo_for_skill.md
 docs/internal/
 
+# Build artifacts
+*.whl
+bpmn-modeling-skill.zip
+
 # Claude Code
 .claude/settings.json
 *.bak
