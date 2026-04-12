@@ -13,22 +13,24 @@ from pathlib import Path
 # Paths relative to this script's location
 SCRIPT_DIR: Path = Path(__file__).resolve().parent
 REPO_ROOT: Path = SCRIPT_DIR.parent
+SKILL_DIR: Path = REPO_ROOT / "skills" / "bpmn-modeling"
 ZIP_OUTPUT: Path = REPO_ROOT / "bpmn-modeling-skill.zip"
 COWORK_SKILL_MD: Path = SCRIPT_DIR / "SKILL.md"
 WHEELS: list[Path] = sorted(SCRIPT_DIR.glob("*.whl"))
 
 ZIP_PREFIX: str = "bpmn-modeling"
 INCLUDE_DIRS: set[str] = {"references", "scripts"}
-INCLUDE_FILES: set[str] = {"SKILL.md", "pyproject.toml"}
+INCLUDE_FILES: set[str] = {"SKILL.md"}
+ROOT_FILES: set[str] = {"pyproject.toml"}
 EXCLUDE_DIRS: set[str] = {"__pycache__"}
 
 if not WHEELS:
     raise FileNotFoundError(f"No .whl files found in {SCRIPT_DIR}")
 
 with zipfile.ZipFile(ZIP_OUTPUT, "w", zipfile.ZIP_DEFLATED) as zf:
-    # Pack root-level skill files
+    # Pack skill files from skills/bpmn-modeling/
     for filename in sorted(INCLUDE_FILES):
-        filepath: Path = REPO_ROOT / filename
+        filepath: Path = SKILL_DIR / filename
         arcname: str = f"{ZIP_PREFIX}/{filename}"
         if filename == "SKILL.md":
             zf.write(COWORK_SKILL_MD, arcname)
@@ -37,14 +39,21 @@ with zipfile.ZipFile(ZIP_OUTPUT, "w", zipfile.ZIP_DEFLATED) as zf:
             zf.write(filepath, arcname)
             print(f"  + {arcname}")
 
+    # Pack root-level files
+    for filename in sorted(ROOT_FILES):
+        filepath = REPO_ROOT / filename
+        arcname = f"{ZIP_PREFIX}/{filename}"
+        zf.write(filepath, arcname)
+        print(f"  + {arcname}")
+
     # Pack skill directories
     for dir_name in sorted(INCLUDE_DIRS):
-        dir_path: Path = REPO_ROOT / dir_name
+        dir_path: Path = SKILL_DIR / dir_name
         for root, dirs, files in os.walk(dir_path):
             dirs[:] = [d for d in dirs if d not in EXCLUDE_DIRS]
             for filename in files:
                 filepath = Path(root) / filename
-                rel_path: str = str(filepath.relative_to(REPO_ROOT)).replace(os.sep, "/")
+                rel_path: str = str(filepath.relative_to(SKILL_DIR)).replace(os.sep, "/")
                 arcname = f"{ZIP_PREFIX}/{rel_path}"
                 zf.write(filepath, arcname)
                 print(f"  + {arcname}")
