@@ -13,7 +13,7 @@ from pathlib import Path
 # Paths relative to this script's location
 SCRIPT_DIR: Path = Path(__file__).resolve().parent
 REPO_ROOT: Path = SCRIPT_DIR.parent
-SKILL_DIR: Path = REPO_ROOT / "skills" / "bpmn-modeling"
+SKILL_DIR: Path = REPO_ROOT
 ZIP_OUTPUT: Path = REPO_ROOT / "bpmn-modeling-skill.zip"
 COWORK_SKILL_MD: Path = SCRIPT_DIR / "SKILL.md"
 WHEELS: list[Path] = sorted(SCRIPT_DIR.glob("*.whl"))
