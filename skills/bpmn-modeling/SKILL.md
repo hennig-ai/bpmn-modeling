@@ -6,7 +6,7 @@ description: >
   to validate/check a BPMN model. Do NOT trigger for general process descriptions
   without BPMN context or other model types.
 metadata:
-  version: "2.0.1"
+  version: "2.0.2"
 ---
 
 # BPMN Modeling — Skill
