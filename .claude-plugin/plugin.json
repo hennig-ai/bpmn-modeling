@@ -1,9 +1,0 @@
-{
-  "name": "bpmn-modeling",
-  "description": "BPMN diagram modeling and validation tools for Markdown table format",
-  "version": "1.1.0",
-  "author": {
-    "name": "Lars Hennig"
-  },
-  "license": "MIT"
-}
