@@ -39,11 +39,6 @@ def main() -> None:
     print(f"Tag     : {tag}")
     print()
 
-    confirm: str = input(f"Create and push tag '{tag}'? [y/N] ")
-    if confirm.lower() != "y":
-        print("Aborted.")
-        sys.exit(0)
-
     run(["git", "tag", tag])
     print(f"Created tag: {tag}")
 
