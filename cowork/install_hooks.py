@@ -30,11 +30,12 @@ if [ "$branch" = "cowork" ]; then
 fi
 
 if [ "$branch" = "main" ]; then
-    missing=$(git log cowork..main --oneline 2>/dev/null)
+    missing=$(git log cowork-main-baseline..main --oneline 2>/dev/null)
     if [ -n "$missing" ]; then
         echo ""
-        echo "  REMINDER: The following commits are on 'main' but not yet on 'cowork':"
+        echo "  REMINDER: New commits on 'main' since last baseline — not yet on 'cowork':"
         echo "$missing" | sed 's/^/    /'
+        echo "  To update the baseline run: git tag -f cowork-main-baseline"
         echo ""
     fi
 fi
