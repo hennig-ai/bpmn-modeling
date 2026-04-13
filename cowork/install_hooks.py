@@ -18,31 +18,18 @@ branch=$(git symbolic-ref HEAD 2>/dev/null | sed 's|refs/heads/||')
 
 if [ "$branch" = "cowork" ]; then
     echo ""
-    echo "  You are pushing to the 'cowork' branch."
-    echo "  Did you run 'python cowork/release.py' to create a release tag?"
+    echo "  REMINDER: Did you run 'python cowork/release.py' to create a release tag?"
     echo "  (If not, no ZIP will be built and no GitHub Release will be created.)"
     echo ""
-    printf "  Continue push without release tag? [y/N] "
-    read answer < /dev/tty
-    if [ "$answer" != "y" ] && [ "$answer" != "Y" ]; then
-        echo "  Push aborted. Run 'python cowork/release.py' first."
-        exit 1
-    fi
 fi
 
 if [ "$branch" = "main" ]; then
     missing=$(git log cowork..main --oneline 2>/dev/null)
     if [ -n "$missing" ]; then
         echo ""
-        echo "  The following commits are on 'main' but not yet on 'cowork':"
+        echo "  REMINDER: The following commits are on 'main' but not yet on 'cowork':"
         echo "$missing" | sed 's/^/    /'
         echo ""
-        printf "  Continue push without merging to cowork? [y/N] "
-        read answer < /dev/tty
-        if [ "$answer" != "y" ] && [ "$answer" != "Y" ]; then
-            echo "  Push aborted."
-            exit 1
-        fi
     fi
 fi
 
