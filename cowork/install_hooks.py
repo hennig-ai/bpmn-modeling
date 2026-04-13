@@ -17,10 +17,16 @@ PRE_PUSH_CONTENT: str = """\
 branch=$(git symbolic-ref HEAD 2>/dev/null | sed 's|refs/heads/||')
 
 if [ "$branch" = "cowork" ]; then
-    echo ""
-    echo "  REMINDER: Did you run 'python cowork/release.py' to create a release tag?"
-    echo "  (If not, no ZIP will be built and no GitHub Release will be created.)"
-    echo ""
+    version=$(grep '^version' pyproject.toml | sed 's/version = "//;s/"//')
+    tag="cowork-v$version"
+    existing=$(git tag -l "$tag")
+    if [ -z "$existing" ]; then
+        echo ""
+        echo "   WARNING: No release tag found for version $version."
+        echo "  Run 'python cowork/release.py' to create tag '$tag'."
+        echo "  WITHOUT THIS TAG NO ZIP WILL BE BUILT AND NO GITHUB RELEASE WILL BE CREATED."
+        echo ""
+    fi
 fi
 
 if [ "$branch" = "main" ]; then
