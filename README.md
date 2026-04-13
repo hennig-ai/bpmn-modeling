@@ -28,9 +28,11 @@ From your project root, clone the skill into the skills directory:
 ```bash
 # Project-level (shared via git)
 git clone https://github.com/hennig-ai/bpmn-modeling.git .claude/skills/bpmn-modeling
+pip install .claude/skills/bpmn-modeling
 
 # Personal (available across all projects)
 git clone https://github.com/hennig-ai/bpmn-modeling.git ~/.claude/skills/bpmn-modeling
+pip install ~/.claude/skills/bpmn-modeling
 ```
 
 ### Claude.ai (Cowork)
@@ -41,12 +43,14 @@ Download `bpmn-modeling-skill.zip` from the [latest GitHub Release](https://gith
 
 ```bash
 git clone https://github.com/hennig-ai/bpmn-modeling.git .agents/skills/bpmn-modeling
+pip install .agents/skills/bpmn-modeling
 ```
 
 ### GitHub Copilot
 
 ```bash
 git clone https://github.com/hennig-ai/bpmn-modeling.git .github/skills/bpmn-modeling
+pip install .github/skills/bpmn-modeling
 ```
 
 ### Claude.ai Projects (alternative)
@@ -71,16 +75,6 @@ Trigger the skill with BPMN-specific requests, e.g.:
 - "Create a BPMN model for an order process"
 - "Add an Exclusive Gateway to the model"
 - "Modify the existing BPMN model"
-
-## Dependencies
-
-The validation script requires Python packages. Install with:
-
-```bash
-pip install <skill-path>
-```
-
-This pulls all dependencies (`bpmn-lib`, `basic-framework`) from PyPI.
 
 ## License
 
