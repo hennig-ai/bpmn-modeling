@@ -31,4 +31,5 @@ bpmn-modeling-skill.zip
 
 # Claude Code
 .claude/settings.json
+.claude/settings.local.json
 *.bak
