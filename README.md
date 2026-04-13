@@ -69,12 +69,26 @@ Any AI agent that supports the [Agent Skills standard](https://agentskills.io) c
 
 > **Note:** This skill has only been tested on Claude Code and Claude.ai (Cowork). It should work on any platform that supports the Agent Skills standard, but is not guaranteed.
 
+## Validation Levels
+
+The validation script supports an optional `validation_level` parameter:
+
+```bash
+python scripts/validate_bpmn.py <data_file> [validation_level]
+```
+
+| Level | Description |
+|-------|-------------|
+| `spec_v2` | Rules required by the BPMN 2.0 specification |
+| `best_practice` (default) | spec_v2 + additional rules for clean, maintainable models |
+
 ## Usage
 
 Trigger the skill with BPMN-specific requests, e.g.:
 - "Create a BPMN model for an order process"
 - "Add an Exclusive Gateway to the model"
 - "Modify the existing BPMN model"
+- "Validate the BPMN model against spec_v2 only"
 
 ## License
 
