@@ -12,7 +12,7 @@ PRE_PUSH_HOOK: Path = HOOKS_DIR / "pre-push"
 
 PRE_PUSH_CONTENT: str = """\
 #!/bin/sh
-# Remind to run release script when pushing to cowork branch
+# Pre-push reminders for main and cowork branches
 
 branch=$(git symbolic-ref HEAD 2>/dev/null | sed 's|refs/heads/||')
 
@@ -27,6 +27,22 @@ if [ "$branch" = "cowork" ]; then
     if [ "$answer" != "y" ] && [ "$answer" != "Y" ]; then
         echo "  Push aborted. Run 'python cowork/release.py' first."
         exit 1
+    fi
+fi
+
+if [ "$branch" = "main" ]; then
+    missing=$(git log cowork..main --oneline 2>/dev/null)
+    if [ -n "$missing" ]; then
+        echo ""
+        echo "  The following commits are on 'main' but not yet on 'cowork':"
+        echo "$missing" | sed 's/^/    /'
+        echo ""
+        printf "  Continue push without merging to cowork? [y/N] "
+        read answer < /dev/tty
+        if [ "$answer" != "y" ] && [ "$answer" != "Y" ]; then
+            echo "  Push aborted."
+            exit 1
+        fi
     fi
 fi
 
